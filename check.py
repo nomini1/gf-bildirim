@@ -10,12 +10,14 @@ STATE = "state/count.txt"
 API = f"https://api.telegram.org/bot{TOKEN}"
 
 def tg(text):
-    requests.post(f"{API}/sendMessage", data={"chat_id": CHAT, "text": text}, timeout=30)
+    r = requests.post(f"{API}/sendMessage", data={"chat_id": CHAT, "text": text}, timeout=30)
+    print("Telegram sendMessage:", r.status_code, r.text)
 
 def tg_photo(path, caption):
     with open(path, "rb") as f:
-        requests.post(f"{API}/sendPhoto", data={"chat_id": CHAT, "caption": caption},
-                      files={"photo": f}, timeout=60)
+        r = requests.post(f"{API}/sendPhoto", data={"chat_id": CHAT, "caption": caption},
+                          files={"photo": f}, timeout=60)
+    print("Telegram sendPhoto:", r.status_code, r.text)
 
 def fix_cookie(c):
     ss = {"lax": "Lax", "strict": "Strict", "no_restriction": "None", "none": "None"}
